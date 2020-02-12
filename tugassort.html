@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div{
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 12px;
+            text-align: left; 
+            margin-top:0 auto;
+            margin-left: 500px;
+            margin-right: 500px;
+        }
+    tr,td,table,th{
+            border: 1px solid gray;
+            border-collapse: collapse;
+            padding: 7px;
+    }
+</style>
+<body>
+    <div>
+        <h1>Input Manusia</h1>
+        Nama : <input type="text" name="" id="nama"><br><br>
+        Usia : <input type="number" name="" id="usia"><br><br>
+        Gender : <input type="radio" name="gender" id="">Pria <input type="radio" name="gender" id=""> wanita<br><br>
+        Pekerjaan : <input type="text" name="" id="pekerjaan"><br><br>
+        <button onclick="onclicksubmit()">Submit</button>
+    </div>
+    <br>
+    <center>
+    <button onclick="sortnama()">Nama</button>
+    <button onclick="sortusia()">Usia</button>
+    <button onclick="sortgender()">Gender</button>
+    <button onclick="sortpekerjaan()">Pekerjaan</button>
+    <br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Usia</th>
+                <th>Gender</th>
+                <th>Pekerjaan</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+
+        </tbody>
+    </table>
+    </center>
+</body>
+<script>
+class Manusia{
+    constructor (nama, usia, gender, pekerjaan){
+        this.nama=nama,
+        this.usia=usia,
+        this.gender=gender,
+        this.pekerjaan=pekerjaan
+    }
+}
+var datamanusia=[
+    new Manusia('jule',23,'pria','artis'),
+    new Manusia('didam',90,'pria','penari'),
+    new Manusia('aha',12,'wanita','scientis'),
+    new Manusia('xoxo',87,'wanita','comedian')
+
+]
+
+const printdata=()=>{
+    output=''
+    datamanusia.forEach((val,index) => {
+            output+=`<tr>
+                <td>${index+1}</td>
+                <td>${val.nama}</td>
+                <td>${val.usia}</td>
+                <td>${val.gender}</td>
+                <td>${val.pekerjaan}</td>
+                </tr>`
+            });
+            
+    document.getElementById('data').innerHTML=output
+}      
+printdata()
+
+const onclicksubmit=()=>{
+    var inputnama=document.getElementById('nama').value
+    var inputusia=document.getElementById('usia').value
+    var inputgender=document.getElementsByName('gender')[0].checked?inputgender='pria':'wanita'
+    var inputpekerjaan=document.getElementById('pekerjaan').value
+    output=''
+    if(inputnama==""||inputusia==null||inputgender==null||inputpekerjaan==""){
+        alert('coba input semua dulu')
+    }
+    else {
+        datamanusia.push(new Manusia (inputnama,inputusia,inputgender,inputpekerjaan))
+        printdata()
+    }
+}
+
+const compareusia=(a,b)=>{
+    if(a.usia<b.usia){
+        return -1
+    }
+    if(a.usia>b.usia){
+        return 1
+    }
+    return 0
+}
+const sortusia=()=>{
+    datamanusia.sort(compareusia)
+    printdata()
+}
+
+const comparenama=(a,b)=>{
+    if(a.nama<b.nama){
+        return -1
+    }
+    if(a.nama>b.nama){
+        return 1
+    }
+    return 0
+}
+const sortnama=()=>{
+    datamanusia.sort(comparenama)
+    printdata()
+}
+
+const comparegender=(a,b)=>{
+    if(a.gender<b.gender){
+        return 1
+    }
+    if(a.gender>b.gender){
+        return -1
+    }
+    return 0
+}
+const sortgender=()=>{
+    datamanusia.sort(comparegender)
+    printdata()
+}
+
+const comparepekerjaan=(a,b)=>{
+    if(a.pekerjaan<b.pekerjaan){
+        return -1
+    }
+    if(a.pekerjaan>b.pekerjaan){
+        return 1
+    }
+    return 0
+}
+const sortpekerjaan=()=>{
+    datamanusia.sort(comparepekerjaan)
+    printdata()
+}
+</script>
+</html>
